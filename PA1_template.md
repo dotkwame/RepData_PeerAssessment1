@@ -58,7 +58,24 @@ number_of_nas
 avg_num_steps <- mean(activity_df$steps, na.rm = TRUE)
 activity_df_no_nas <- data.frame(steps = activity_df$steps, date = activity_df$date, activity_df$interval)
 activity_df_no_nas$steps[is.na(activity_df_no_nas$steps) == TRUE] = avg_num_steps
+
+total_steps_per_day_no_nas <- with(activity_df_no_nas, tapply(steps, date, sum))
+mean_no_nas = mean(total_steps_per_day_no_nas)
+mean_no_nas
 ```
+
+```
+## [1] 10766.19
+```
+
+```r
+hist(total_steps_per_day_no_nas, xlab = "Number of daily steps", main = "")
+abline(v = median(total_steps_per_day_no_nas), col = "green", lwd = 2, lty = 2)
+abline(v = mean(total_steps_per_day_no_nas), col = "blue", lwd = 2, lty = 4)
+rug(total_steps_per_day_no_nas)
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
 
 
 ## Are there differences in activity patterns between weekdays and weekends?

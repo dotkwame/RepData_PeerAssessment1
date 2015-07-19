@@ -44,13 +44,13 @@ activity_df_no_nas <- data.frame(steps = activity_df$steps, date = activity_df$d
 activity_df_no_nas$steps[is.na(activity_df_no_nas$steps) == TRUE] = avg_num_steps
 
 total_steps_per_day_no_nas <- with(activity_df_no_nas, tapply(steps, date, sum))
-mean_no_nas = mean(total_steps_per_day, na.rm = TRUE)
+mean_no_nas = mean(total_steps_per_day_no_nas)
 mean_no_nas
 
-hist(total_steps_per_day, xlab = "Number of daily steps", main = "")
-abline(v = median(total_steps_per_day, na.rm = TRUE), col = "green", lwd = 2, lty = 2)
-abline(v = mean(total_steps_per_day, na.rm = TRUE), col = "blue", lwd = 2, lty = 4)
-rug(total_steps_per_day)
+hist(total_steps_per_day_no_nas, xlab = "Number of daily steps", main = "")
+abline(v = median(total_steps_per_day_no_nas), col = "green", lwd = 2, lty = 2)
+abline(v = mean(total_steps_per_day_no_nas), col = "blue", lwd = 2, lty = 4)
+rug(total_steps_per_day_no_nas)
 
 ```
 
