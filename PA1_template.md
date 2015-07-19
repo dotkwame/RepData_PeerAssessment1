@@ -12,7 +12,8 @@ activity_df <- read.csv(unzip("activity.zip", "activity.csv"))
 
 ```r
 total_steps_per_day <- with(activity_df, tapply(steps, date, sum))
-mean(total_steps_per_day, na.rm = TRUE)
+mean_steps <- mean(total_steps_per_day, na.rm = TRUE)
+mean_steps
 ```
 
 ```
@@ -20,9 +21,18 @@ mean(total_steps_per_day, na.rm = TRUE)
 ```
 
 ```r
+median_steps <- median(total_steps_per_day, na.rm = TRUE)
+median_steps
+```
+
+```
+## [1] 10765
+```
+
+```r
 hist(total_steps_per_day, xlab = "Number of daily steps", main = "")
-abline(v = median(total_steps_per_day, na.rm = TRUE), col = "green", lwd = 2, lty = 2)
-abline(v = mean(total_steps_per_day, na.rm = TRUE), col = "blue", lwd = 2, lty = 4)
+abline(v = median_steps, col = "green", lwd = 2, lty = 2)
+abline(v = mean_steps, col = "blue", lwd = 2, lty = 4)
 rug(total_steps_per_day)
 ```
 
@@ -62,6 +72,15 @@ activity_df_no_nas$steps[is.na(activity_df_no_nas$steps) == TRUE] = avg_num_step
 total_steps_per_day_no_nas <- with(activity_df_no_nas, tapply(steps, date, sum))
 mean_no_nas = mean(total_steps_per_day_no_nas)
 mean_no_nas
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+median_no_nas = median(total_steps_per_day_no_nas)
+median_no_nas
 ```
 
 ```
