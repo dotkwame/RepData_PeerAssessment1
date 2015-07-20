@@ -45,7 +45,7 @@ number_of_nas <- length(activity_df$steps[is.na(activity_df$steps)])
 number_of_nas
 
 avg_num_steps <- mean(activity_df$steps, na.rm = TRUE)
-activity_df_no_nas <- data.frame(steps = activity_df$steps, date = activity_df$date, activity_df$interval)
+activity_df_no_nas <- data.frame(steps = activity_df$steps, date = activity_df$date, interval = activity_df$interval)
 activity_df_no_nas$steps[is.na(activity_df_no_nas$steps) == TRUE] = avg_num_steps
 
 total_steps_per_day_no_nas <- with(activity_df_no_nas, tapply(steps, date, sum))
@@ -65,5 +65,16 @@ rug(total_steps_per_day_no_nas)
 
 ## Are there differences in activity patterns between weekdays and weekends?
 ```{r, echo=TRUE}
+activity_df_no_nas$weekdays <- weekdays(as.Date(activity_df_no_nas$date))
+activity_df_no_nas$week.period <- ifelse(activity_df_no_nas$weekdays %in% c('Sunday', 'Saturday'), yes = 'weekend', no = 'weekday')
+ 
+total_steps_by_weekday <- with(subset(activity_df_no_nas, week.period == "weekday"), tapply(steps, interval, mean))
+
+total_steps_by_weekend <- with(subset(activity_df_no_nas, week.period == "weekend"), tapply(steps, interval, mean))
+par(mfrow=c(2,1))
+plot(row.names(total_steps_by_weekday), total_steps_by_weekday, type = 'l', ylab= "Number of steps", xlab="Interval", main = "Weekday")
+
+plot(row.names(total_steps_by_weekend), total_steps_by_weekend, type = 'l', ylab= "Number of steps", xlab="Interval", main = "Weekend")
+
 
 ```
